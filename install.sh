@@ -1,7 +1,7 @@
 #!/bin/bash
 SCRIPT_NAME=`basename "$0"`
 SCRIPT_PATH=${0%`basename "$0"`}
-PLUGIN_PATH="/home/${USER}/.local/share/rhythmbox/plugins/lastfm_queue/"  
+PLUGIN_PATH="/home/${USER}/.local/share/rhythmbox/plugins/send_first/"  
 
 #build the dirs
 mkdir -p $PLUGIN_PATH
