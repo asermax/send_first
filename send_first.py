@@ -33,6 +33,16 @@ ui_context_menu = """
             <menuitem name="BrowserPopupQueueFirst" action="QueueFirstAction"/>
         </placeholder>
     </popup>
+    <popup name="PlaylistViewPopup">
+        <placeholder name="PluginPlaceholder">
+            <menuitem name="BrowserPopupQueueFirst" action="QueueFirstAction"/>
+        </placeholder>
+    </popup>
+    <popup name="PodcastViewPopup">
+        <placeholder name="PluginPlaceholder">
+	        <menuitem name="BrowserPopupQueueFirst" action="QueueFirstAction"/>
+        </placeholder>
+    </popup>
 </ui>
 """
 
@@ -64,7 +74,7 @@ class SendFirstPlugin (GObject.Object, Peas.Activatable):
                                               "" )                                           
                                    
         self.queuefirst_action.connect ( 'activate', self.queue_first, 
-                                                     self.shell.props.library_source,
+                                                     self.shell,
                                                      self.shell.props.queue_source )       
                 
         #creamos el action group y lo agregamos a la interfaz
@@ -101,9 +111,10 @@ class SendFirstPlugin (GObject.Object, Peas.Activatable):
 	    for entry in selected:
 	        queue.move_entry( entry, 0 )  
 	        
-	def queue_first(self, _ , library, queue ):
+	def queue_first(self, _ , shell, queue ):
 	    #get the selected entries
-	    selected = library.get_entry_view().get_selected_entries()
+	    page = shell.props.selected_page
+	    selected = page.get_entry_view().get_selected_entries()
 	    
 	    #add them first
 	    selected.reverse()
