@@ -5,9 +5,8 @@ This Rhythmbox's plugin allows you to send any song in your library or play queu
 
 Installation
 -----------
-To install, just execute the install.sh script (this will install the plugin locally, it will only be available for the current user).
-
-TODO: enable global installation (for all users).
+To install, just execute the install.sh script; this will install the plugin locally by default. 
+If you want to install the plugin globally (for all the users of the system) you need to use the '-g' option.
 
 Use
 ---
