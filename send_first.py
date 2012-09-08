@@ -62,7 +62,7 @@ class SendFirstPlugin (GObject.Object, Peas.Activatable):
         self.sendfirst_action = Gtk.Action( 'SendFirstAction', 
                                              _('Send first'), 
                                              _('Send this song to the beginning of the list.'),
-                                            "" )                                           
+                                            Gtk.STOCK_GOTO_TOP )                                           
                                    
         self.sendfirst_action.connect ( 'activate', self.send_first, 
                                                     self.shell.props.queue_source )  
@@ -71,7 +71,7 @@ class SendFirstPlugin (GObject.Object, Peas.Activatable):
         self.queuefirst_action = Gtk.Action( 'QueueFirstAction', 
                                               _('Queue first'), 
                                               _('Send this song to the beginning of the play queue.'),
-                                              "" )                                           
+                                              Gtk.STOCK_ADD )                                           
                                    
         self.queuefirst_action.connect ( 'activate', self.queue_first, 
                                                      self.shell,
