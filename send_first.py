@@ -23,7 +23,7 @@ from send_rb3compat import Action
 from send_rb3compat import ApplicationShell
 
 import gettext
-gettext.install('rhythmbox', RB.locale_dir(), unicode=True)
+gettext.install('rhythmbox', RB.locale_dir())
 
 ui_context_menu = """
 <ui>
@@ -44,7 +44,7 @@ ui_context_menu = """
     </popup>
     <popup name="PodcastViewPopup">
         <placeholder name="PluginPlaceholder">
-	        <menuitem name="BrowserPopupQueueFirst" action="QueueFirstAction"/>
+            <menuitem name="BrowserPopupQueueFirst" action="QueueFirstAction"/>
         </placeholder>
     </popup>
 </ui>
@@ -57,17 +57,17 @@ class SendFirstPlugin (GObject.Object, Peas.Activatable):
     def __init__(self):
         GObject.Object.__init__(self)
 
-	def do_activate (self):
-		self.shell = self.object
-		
-		#uim = self.shell.props.ui_manager	
-        
+    def do_activate (self):
+        self.shell = self.object
+
+        #uim = self.shell.props.ui_manager	
+
         self.action_group = ActionGroup(self.shell, 'SendFirstPluginActionGroup')
-        
+
         action = self.action_group.add_action(source=self.shell.props.queue_source,
             action_name='SendFirstAction', label=_('Send first'),
             func=self.send_first)
-            
+
         action = self.action_group.add_action(source=self.shell.props.queue_source,
             shell = self.shell,
             action_name='QueueFirstAction', label=_('Queue first'),
@@ -77,42 +77,42 @@ class SendFirstPlugin (GObject.Object, Peas.Activatable):
         self._appshell.insert_action_group(self.action_group)
         self._appshell.add_browser_menuitems(ui_context_menu, self.action_group.name)
 
-		#creamos las actions
+        #creamos las actions
         #self.sendfirst_action = Gtk.Action( 'SendFirstAction', 
         #                                     _('Send first'), 
         #                                     _('Send this song to the beginning of the list.'),
         #                                    Gtk.STOCK_GOTO_TOP )                                           
-                                   
+
         #self.sendfirst_action.connect ( 'activate', self.send_first, 
         #                                            self.shell.props.queue_source )  
-                                               
-                                               #creamos las actions
+
+        #creamos las actions
         #self.queuefirst_action = Gtk.Action( 'QueueFirstAction', 
         #                                      _('Queue first'), 
         #                                      _('Send this song to the beginning of the play queue.'),
         #                                      Gtk.STOCK_ADD )                                           
-                                   
+
         #self.queuefirst_action.connect ( 'activate', self.queue_first, 
         #                                             self.shell,
         #                                             self.shell.props.queue_source )       
-                
+
         #creamos el action group y lo agregamos a la interfaz
         #self.action_group = Gtk.ActionGroup( 'SendFirstPluginActionGroup' )
         #self.action_group.add_action( self.sendfirst_action )    
         #self.action_group.add_action( self.queuefirst_action )    
         #uim.insert_action_group( self.action_group, -1 )
-                
+
         #cargamos la definición de la ui y obtenemos el id del ui
         #self.ui_id = uim.add_ui_from_string( ui_context_menu )
-        
+
         #updateamos la ui
         #uim.ensure_update()        
-	
-	def do_deactivate (self):
-		self._appshell.cleanup()
-		#uim = self.shell.props.ui_manager
-		
-		#uim.remove_action_group(self.action_group)
+
+    def do_deactivate (self):
+        self._appshell.cleanup()
+        #uim = self.shell.props.ui_manager
+
+        #uim.remove_action_group(self.action_group)
         #uim.remove_ui(self.ui_id)
         #uim.ensure_update()
 
@@ -120,28 +120,28 @@ class SendFirstPlugin (GObject.Object, Peas.Activatable):
         #del self.sendfirst_action
         #del self.queuefirst_action
 
-	def send_first(self, action, param, args):
-	    #get the selected entries
+    def send_first(self, action, param, args):
+        #get the selected entries
         queue = args['source']
-        
-	    selected = queue.get_entry_view().get_selected_entries()
-	    
-	    #relocate them first
-	    selected.reverse()
-	    
-	    for entry in selected:
-	        queue.move_entry( entry, 0 )  
-	        
-	def queue_first(self, action, param, args ):
-	    #get the selected entries
+
+        selected = queue.get_entry_view().get_selected_entries()
+
+        #relocate them first
+        selected.reverse()
+
+        for entry in selected:
+            queue.move_entry( entry, 0 )  
+
+    def queue_first(self, action, param, args ):
+        #get the selected entries
         shell = args['shell']
         queue = args['source']
-        
-	    page = shell.props.selected_page
-	    selected = page.get_entry_view().get_selected_entries()
-	    
-	    #add them first
-	    selected.reverse()
-	    
-	    for entry in selected:
-	        queue.add_entry( entry, 0 )    
+
+        page = shell.props.selected_page
+        selected = page.get_entry_view().get_selected_entries()
+
+        #add them first
+        selected.reverse()
+
+        for entry in selected:
+            queue.add_entry( entry, 0 )    
